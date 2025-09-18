@@ -1,0 +1,10 @@
+{
+  "name": "com.kimicu.achievementsystem",
+  "version": "1.0.0",
+  "author": "Kimicu",
+  "displayName": "Kimicu Achievement System",
+  "description": "Package for add achievements in your game.",
+  "unity": "2019.1",
+  "dependencies": {
+  }
+}
