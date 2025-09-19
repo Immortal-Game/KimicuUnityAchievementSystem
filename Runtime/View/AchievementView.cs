@@ -41,8 +41,8 @@ namespace Kimicu.Achievements.View
 
 		public virtual void UpdateView<T>(Achievement<T> achievement, string localizeKey)
 		{
-			Title.text = achievement.Item.LocalizeViewData[localizeKey].Title;
-			Description.text = achievement.Item.LocalizeViewData[localizeKey].Description;
+			Title.text = achievement.Item.Title;
+			Description.text = achievement.Item.Description;
 
 			CollectButton.interactable = achievement.IsComplete;
 		}

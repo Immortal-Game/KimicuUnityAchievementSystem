@@ -1,24 +1,21 @@
 using System;
-using System.Collections.Generic;
 
 namespace Kimicu.Achievements
 {
 	[Serializable]
-	public readonly struct AchievementProgressItem<T> : IAchievementProgress<T>
+	public readonly partial struct AchievementProgressItem<T> : IAchievementProgress<T>
 	{
-		/// <summary> Unique key achievement </summary>
 		public string Id { get; }
-		
-		/// <summary> example: key["ru"] = {"title", "description"} </summary>
-		public Dictionary<string, AchievementLocalizeInfo> LocalizeViewData { get; }
+		public string Title { get; }
+		public string Description { get; }
 
-		/// <summary> T - is progress type (int, float, List, ...) </summary>
 		public T TargetProgress { get; }
 
-		public AchievementProgressItem(string id, Dictionary<string, AchievementLocalizeInfo> localizeViewData, T targetProgress)
+		public AchievementProgressItem(string id, string title, string description, T targetProgress)
 		{
 			Id = id;
-			LocalizeViewData = localizeViewData;
+			Title = title;
+			Description = description;
 			TargetProgress = targetProgress;
 		}
 	}

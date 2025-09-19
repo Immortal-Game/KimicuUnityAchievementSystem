@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace Kimicu.Achievements
 {
-	public class AchievementRoot
+	public partial class AchievementRoot
 	{
 		public AchievementRootView View;
 

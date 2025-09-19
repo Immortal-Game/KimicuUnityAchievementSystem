@@ -1,21 +1,19 @@
 using System;
-using System.Collections.Generic;
 
 namespace Kimicu.Achievements
 {
 	[Serializable]
-	public readonly struct AchievementItem : IAchievementItem
+	public partial class AchievementItem : IAchievementItem
 	{
-		/// <summary> Unique key achievement </summary>
 		public string Id { get; }
-		
-		/// <summary> example: key["ru"] = {"title", "description"} </summary>
-		public Dictionary<string, AchievementLocalizeInfo> LocalizeViewData { get; }
+		public string Title { get; }
+		public string Description { get; }
 
-		public AchievementItem(string id, Dictionary<string, AchievementLocalizeInfo> localizeViewData)
+		public AchievementItem(string id, string title, string description)
 		{
 			Id = id;
-			LocalizeViewData = localizeViewData;
+			Title = title;
+			Description = description;
 		}
 	}
 }

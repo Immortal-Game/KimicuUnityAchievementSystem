@@ -13,59 +13,51 @@ AchievementRoot root = await AchievementRoot.Initialize(/* Path to your custom p
 // AchievementRoot is not siglton, you can create different tasks for different tasks
 ```
 
-### 2. Create localize achievements data
+If you want to add more of your fields to achievement item, then: <br>
+Create new class with name 'AchievementItem' or 'AchievementProgressItem<T>' or custom item in namespace 'Kimicu.Achievements' and do not forget to add 'partial'
 ```csharp
-var localize = new Dictionary<string, AchievementLocalizeInfo>() {
-    {
-        "ru", new AchievementLocalizeInfo("имя_1", "описание_1")
-    }, {
-        "en", new AchievementLocalizeInfo("name_1", "description_1")
-    }, {
-       etc 
-    }
-};
-```
+// Example: add `Sprite` for item
 
-If you want to add more of your fields to localization, then: <br>
-Create new class with name 'AchievementLocalizeInfo' in namespace 'Kimicu.Achievements' and do not forget to add 'partial'
-```csharp
-// Example: add `Sprite` for localize info
+namespace Kimicu.Achievements; // IMPORTANT!!!
 
-public partial class AchievementLocalizeInfo
+public partial interface IAchievementItem
 {
-    public readonly Sprite Icon;
-
-    public AchievementLocalizeInfo(string title, string description, Sprite icon)
-    {
-        Icon = icon;
-        Title = title;
-        Description = description;
-    }
+    public Sprite Icon { get; }
 }
 
-var localize = new Dictionary<string, AchievementLocalizeInfo>() {
+public partial class AchievementItem
+{
+    public Sprite Icon { get; }
+
+    public AchievementItem(string id, string title, string description, Sprite icon)
     {
-        "ru", new AchievementLocalizeInfo("имя_1", "описание_1", spriteRU)
-    }, {
-        "en", new AchievementLocalizeInfo("name_1", "description_1", spriteEN)
+        Id = id;
+        Title = title;
+        Description = description;
+        Icon = icon;
     }
-};
+}
 ```
 
 ### 3. Create achievement item
 There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
 ```csharp
 var achievementItem = new AchievementItem("id_1", localize);
+
 // or
+
 var target = 100; // must have 'string', 'list', 'class', etc.
-var achievementItem = new AchievementProgressItem<int>("id_1", localize, target);
+//If you finalized the 'AchievementProgressitem' as in 2 points, then your constructor may have another
+var achievementItem = new AchievementProgressItem<int>("id_1", "name", "description", target);
 ```
 
 ### 4. Create achievement
 There are also 2 options for creating: (`Achievement<T>` and `ProgressAchievement<T>`)
 ```csharp
 var achievement = new Achievement<Unit>(achievementItem);
+
 // or
+
 int startProgress = 0; // Type 'StartProgress' should match the type 'Achievementitem'
 var achievement = new ProgressAchievement<int>(achievementItem, startProgress, isComplete);
 // If we create with progress, then we need to specify the output spree for our type
@@ -73,7 +65,7 @@ var achievement = new ProgressAchievement<int>(achievementItem, startProgress, i
 achievement.ProgressToString = () => $"{achievement.Progress} / {achievement.ProgressItem.TargetProgress}";
 ```
 
-### 5. To display a lot of ecups of ACHEVOVKS required:
+### 5. To display a lot of ecups of achievement required:
 ```csharp
 var prefab = Resources.Load<AchievementView>("Achievement View");
 var achievements = new Dictionary<AchievementView, Achievement<Unit>[]> {
@@ -91,7 +83,7 @@ Achievement<Unit>[]; // (Unit) - This is a plug for usually achievement
 prefab; // This is a proofab that will be used for this group of achievement. 
 // default paths: "Achievement View" & "Progress Achievement View"
 
-// Для отображения в 'UI':
+// For display in 'UI':
 root.View.Setun(localizeID, achievements);
 ```
 
@@ -112,8 +104,8 @@ achievement.Dispose(); // Clear object
 
 ### 7. How to add reward and display reward in UI
 #### 7.1. Create new template for achievement ui
-![Unity_wWtBMgW934.png](%7Eimg/Unity_wWtBMgW934.png)
-![Unity_nwmgTE4NUs.png](%7Eimg/Unity_nwmgTE4NUs.png)
+![Unity_wWtBMgW934.png](img%7E/Unity_wWtBMgW934.png)
+![Unity_nwmgTE4NUs.png](img%7E/Unity_nwmgTE4NUs.png)
 #### 7.2. Create script for template
 ```csharp
 // Reward.cs
@@ -152,7 +144,7 @@ public interface IRewardAchievementProgress<out T> : IAchievementProgress<T>
 ```csharp
 // RewardProgressAchievementItem.cs
 [Serializable]
-public struct RewardProgressAchievementItem<T> : IRewardAchievementProgress<T>
+public class RewardProgressAchievementItem<T> : IRewardAchievementProgress<T>
 {
     public string Id { get; }
     public Dictionary<string, AchievementLocalizeInfo> LocalizeViewData { get; }
@@ -213,4 +205,4 @@ public class RewardProgressAchievementView : ProgressAchievementView
     }
 }
 ```
-Also, do not forget to add `RewardProgressAchievementView` and` RewardItemView` on the prefabs.
+Also, do not forget to add `RewardProgressAchievementView.cs` and` RewardItemView.cs` on the prefabs.

@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-
 namespace Kimicu.Achievements
 {
-	public interface IAchievementItem
+	public partial interface IAchievementItem
 	{
 		public string Id { get; }
-		public Dictionary<string, AchievementLocalizeInfo> LocalizeViewData { get; }
+		public string Title { get; }
+		public string Description { get; }
 	}
 }
