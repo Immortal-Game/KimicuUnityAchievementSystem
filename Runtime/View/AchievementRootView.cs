@@ -1,32 +1,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Kimicu.Achievements.View
 {
-	public partial class AchievementRootView : MonoBehaviour
+	public sealed partial class AchievementRootView : MonoBehaviour
 	{
+		[SerializeField] private GameObject _view;
 		[SerializeField] private Transform _container;
 
 		private readonly Dictionary<string, AchievementView> _achievementViews = new();
+		private readonly UnityEvent _achievementsUpdate = new();
 
-		public virtual void Setup<T>(string localizeKey, Dictionary<AchievementView, Achievement<T>[]> achievements)
+		public void Setup<T>(Dictionary<AchievementView, Achievement<T>[]> achievements)
 		{
 			foreach (var achievementPair in achievements)
 			{
 				foreach (var achievement in achievementPair.Value)
 				{
 					var view = Instantiate(achievementPair.Key, _container);
-					view.Setup<T>(achievement, localizeKey);
+					view.Setup(achievement);
 					_achievementViews.Add(achievement.Item.Id, view);
+					_achievementsUpdate.AddListener(() => view.UpdateView(achievement));
 				}
 			}
 		}
 
-		public virtual void Show() { }
-		public virtual void Hide() { }
+		public void Show()
+		{
+			_view.SetActive(true);
+			Redraw();
+		}
 
-		public virtual void Redraw()
+		public void Hide() => _view.SetActive(false);
+
+		public void Redraw()
 		{
 			var childCount = _container.childCount;
 			for (var i = 0; i < childCount; i++)
@@ -38,12 +47,9 @@ namespace Kimicu.Achievements.View
 			UpdateValues();
 		}
 
-		public virtual void UpdateValues()
+		public void UpdateValues()
 		{
-			foreach (var pair in _achievementViews)
-			{
-				//pair.Value.Setup();
-			}
+			_achievementsUpdate?.Invoke();
 		}
 	}
 }

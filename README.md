@@ -42,7 +42,7 @@ public partial class AchievementItem
 ### 3. Create achievement item
 There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
 ```csharp
-var achievementItem = new AchievementItem("id_1", localize);
+var achievementItem = new AchievementItem("id_1");
 
 // or
 
@@ -84,7 +84,7 @@ prefab; // This is a proofab that will be used for this group of achievement.
 // default paths: "Achievement View" & "Progress Achievement View"
 
 // For display in 'UI':
-root.View.Setun(localizeID, achievements);
+root.View.Setun(achievements);
 ```
 
 ### 6. To Update achievement progress or other data
@@ -94,7 +94,8 @@ achievement.Progress = 10;
 
 var targetProgress = achievement.ProgressItem.TargetProgress; // ReadOnly
 var id = achievement.ProgressItem.Id; // ReadOnly
-var localizes = achievement.ProgressItem.LocalizeViewData; // Get only
+var title = achievement.ProgressItem.Title; // ReadOnly
+var description = achievement.ProgressItem.Description; // ReadOnly
 achievement.OnStep += () => ...; // Progress Changed
 achievement.OnCompleteEvent += () => ...; // Complete
 achievement.Complete(); // Mark complete

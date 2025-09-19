@@ -11,11 +11,11 @@ namespace Kimicu.Achievements.View
 		[SerializeField] protected TMP_Text Description;
 		[SerializeField] protected Button CollectButton;
 
-		protected UnityEvent Dispose = new();
+		protected readonly UnityEvent Dispose = new();
 		
-		public virtual void Setup<T>(Achievement<T> achievement, string localizeKey)
+		public virtual void Setup<T>(Achievement<T> achievement)
 		{
-			UpdateView(achievement, localizeKey);
+			UpdateView(achievement);
 
 			achievement.OnCompleteEvent += OnComplete;
 			CollectButton.onClick.AddListener(Collected);
@@ -39,7 +39,7 @@ namespace Kimicu.Achievements.View
 			CollectButton.interactable = true;
 		}
 
-		public virtual void UpdateView<T>(Achievement<T> achievement, string localizeKey)
+		public virtual void UpdateView<T>(Achievement<T> achievement)
 		{
 			Title.text = achievement.Item.Title;
 			Description.text = achievement.Item.Description;

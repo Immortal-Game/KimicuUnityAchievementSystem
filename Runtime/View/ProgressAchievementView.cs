@@ -7,9 +7,9 @@ namespace Kimicu.Achievements.View
 	{
 		[SerializeField] protected TMP_Text ProgressTMP;
 
-		public override void Setup<T>(Achievement<T> achievement, string localizeKey)
+		public override void Setup<T>(Achievement<T> achievement)
 		{
-			base.Setup<T>(achievement, localizeKey);
+			base.Setup<T>(achievement);
 			var progressAchievement = (ProgressAchievement<T>)achievement;
 
 			progressAchievement.OnStep += OnStep;
@@ -28,9 +28,9 @@ namespace Kimicu.Achievements.View
 			ProgressTMP.text = "100 %";
 		}
 
-		public override void UpdateView<T>(Achievement<T> achievement, string localizeKey)
+		public override void UpdateView<T>(Achievement<T> achievement)
 		{
-			base.UpdateView(achievement, localizeKey);
+			base.UpdateView(achievement);
 			var progressAchievement = (ProgressAchievement<T>)achievement;
 			ProgressTMP.text = $"{progressAchievement.Progress.ToString()} / {progressAchievement.ProgressItem.TargetProgress.ToString()}";
 		}
