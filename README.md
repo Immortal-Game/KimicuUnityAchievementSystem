@@ -9,12 +9,12 @@ https://github.com/Kitgun1/KimicuUnityAchievementSystem.git
 ------------
 
 > [!NOTE]  
-> Documentation [RU](Docs%7E/Documentation-ru.md) or [EN](Docs%7E/Documentation-en.md)
+> Documentation [RU](Docs%7E/Documentation-ru.md)
 
 ## Example
 ### 1. Инициализация в проекте
 > [!NOTE]  
-> [Инициализация](Docs%7E/Documentation-ru.md#Инициализация)
+> [Документация: Инициализация](Docs%7E/Documentation-ru.md#Инициализация)
 ```csharp
 AchievementRoot root = await AchievementRoot.Initialize(parent);
 ```
@@ -48,7 +48,7 @@ public partial class AchievementItem
 
 ### 2. Create achievement item
 > [!NOTE]  
-> [Данные](Docs%7E/Documentation-ru.md#Данные)
+> [Документация: Данные](Docs%7E/Documentation-ru.md#Данные)
 
 There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
 ```csharp
@@ -63,7 +63,7 @@ var achievementItem = new ProgressAchievementItem<int>("id_1", "name", "descript
 
 ### 3. Создать достижение
 > [!NOTE]  
-> [#Данные](Docs%7E/Documentation-ru.md#Данные)
+> [Документация: Модель](Docs%7E/Documentation-ru.md#модель-для-работы-ачивок)
 
 Есть также 2 варианта создания: (`Achievement<T>` and `ProgressAchievement<T>`)
 ```csharp
@@ -78,7 +78,11 @@ var achievement = new ProgressAchievement<int>(achievementItem, startProgress, i
 achievement.ProgressToString = () => $"{achievement.Progress} / {achievement.ProgressItem.TargetProgress}";
 ```
 
-### 4. To display a lot of ecups of achievement required:
+### 4. Для отображения ачивок в UI:
+
+> [!NOTE]  
+> [Документация: Группа ачивок](Docs%7E/Documentation-ru.md#группа-ачивок)
+
 ```csharp
 var prefab = Resources.Load<AchievementView>("Achievement View");
 var achievements = new Dictionary<AchievementView, Achievement<Unit>[]> {
@@ -88,19 +92,21 @@ var achievements = new Dictionary<AchievementView, Achievement<Unit>[]> {
         }
     }
 };
-// We will analyze in more detail:
-
-Achievement<Unit>[]; // (Unit) - This is a plug for usually achievement 
-    
-// use default path or custom prefabs. 
-prefab; // This is a proofab that will be used for this group of achievement. 
-// default paths: "Achievement View" & "Progress Achievement View"
-
-// For display in 'UI':
-root.View.Setun(achievements);
 ```
 
-### 6. To Update achievement progress or other data
+> [!NOTE]  
+> [Документация: Инициализация View](Docs%7E/Documentation-ru.md#инициализация-view)
+
+```csharp
+root.View.Setuз(root.NotificationRootView.Notify, achievements);
+// root.NotificationRootView.Notify() Вызывать уведомлении, если 
+```
+
+### 5. Обновить прогресс достижения или другие данные
+
+> [!NOTE]  
+> [Документация: Группа ачивок](Docs%7E/Documentation-ru.md#группа-ачивок)
+
 ```csharp
 // change progress: (if achievement type is ProgressAchievement<T>)
 achievement.Progress = 10;
@@ -116,11 +122,11 @@ achievement.IsComplete; // Is complete
 achievement.Dispose(); // Clear object
 ```
 
-### 7. How to add reward and display reward in UI
-#### 7.1. Create new template for achievement ui
+### 6. Как добавить вознаграждение и показать вознаграждение в пользовательском интерфейсе
+#### 6.1. Создайте новый префаб для пользовательского интерфейса достижений
 ![Unity_wWtBMgW934.png](img%7E/Unity_wWtBMgW934.png)
 ![Unity_nwmgTE4NUs.png](img%7E/Unity_nwmgTE4NUs.png)
-#### 7.2. Create script for template
+#### 6.2. Создаем скрипты для наград
 ```csharp
 // Reward.cs
 public readonly struct Reward
@@ -219,4 +225,4 @@ public class RewardProgressAchievementView : ProgressAchievementView
     }
 }
 ```
-Also, do not forget to add `RewardProgressAchievementView.cs` and` RewardItemView.cs` on the prefabs.
+Кроме того, не забудьте добавить `RewardProgressAchievementView.cs` и` RewardItemView.cs` на префаб.
