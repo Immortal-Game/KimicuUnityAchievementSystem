@@ -3,7 +3,7 @@
 ## How to add in project
 PackageManager > + > Add package from git URL..
 ```
-https://github.com/Kitgun1/KimicuUnityAchievementSystem.git
+https://github.com/TheErikSar/KimicuUnityAchievementSystem.git
 ```
 
 ------------
