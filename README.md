@@ -14,7 +14,7 @@ https://github.com/Kitgun1/KimicuUnityAchievementSystem.git
 ## Example
 ### 1. Инициализация в проекте
 > [!NOTE]  
-> [#Инициализация](Docs%7E/Documentation-ru.md#Инициализация)
+> [Инициализация](Docs%7E/Documentation-ru.md#Инициализация)
 ```csharp
 AchievementRoot root = await AchievementRoot.Initialize(parent);
 ```
@@ -48,7 +48,8 @@ public partial class AchievementItem
 
 ### 2. Create achievement item
 > [!NOTE]  
-> [#Данные](Docs%7E/Documentation-ru.md#Данные)
+> [Данные](Docs%7E/Documentation-ru.md#Данные)
+
 There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
 ```csharp
 var achievementItem = new AchievementItem("id_1");
@@ -63,6 +64,7 @@ var achievementItem = new ProgressAchievementItem<int>("id_1", "name", "descript
 ### 3. Создать достижение
 > [!NOTE]  
 > [#Данные](Docs%7E/Documentation-ru.md#Данные)
+
 Есть также 2 варианта создания: (`Achievement<T>` and `ProgressAchievement<T>`)
 ```csharp
 var achievement = new Achievement<Unit>(achievementItem);
