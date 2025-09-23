@@ -19,8 +19,23 @@ https://github.com/Kitgun1/KimicuUnityAchievementSystem.git
 AchievementRoot root = await AchievementRoot.Initialize(parent);
 ```
 
+
+### 2. Create achievement item
+> [!NOTE]  
+> [Документация: Данные](Docs%7E/Documentation-ru.md#Данные)
+
+There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
+```csharp
+var achievementItem = new AchievementItem("id_1");
+
+// or
+
+var target = 100; // может быть 'string', 'list', 'class', etc.
+var achievementItem = new ProgressAchievementItem<int>("id_1", "name", "description", target);
+```
+
 Если вы хотите добавить больше своих полей в элемент достижения, то: <br>
-Создать новый класс с именем 'AchievementItem' или 'AchievementProgressItem<T>' или пользовательский элемент 
+Создать новый класс с именем 'AchievementItem' или 'AchievementProgressItem<T>' или пользовательский элемент
 в пространстве имен 'Kimicu.Achievements' и не забудьте добавить 'partial'
 ```csharp
 // Example: Добавление `Sprite` в сухие данные
@@ -44,20 +59,6 @@ public partial class AchievementItem
         Icon = icon;
     }
 }
-```
-
-### 2. Create achievement item
-> [!NOTE]  
-> [Документация: Данные](Docs%7E/Documentation-ru.md#Данные)
-
-There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
-```csharp
-var achievementItem = new AchievementItem("id_1");
-
-// or
-
-var target = 100; // может быть 'string', 'list', 'class', etc.
-var achievementItem = new ProgressAchievementItem<int>("id_1", "name", "description", target);
 ```
 
 
