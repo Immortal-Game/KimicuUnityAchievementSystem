@@ -105,9 +105,6 @@ root.View.Setuз(root.NotificationRootView.Notify, achievements);
 
 ### 5. Обновить прогресс достижения или другие данные
 
-> [!NOTE]  
-> [Документация: Группа ачивок](Docs%7E/Documentation-ru.md#группа-ачивок)
-
 ```csharp
 // change progress: (if achievement type is ProgressAchievement<T>)
 achievement.Progress = 10;
