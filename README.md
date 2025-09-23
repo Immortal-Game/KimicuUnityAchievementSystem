@@ -1,24 +1,31 @@
 # Kimicu Achievements / Quest
 
 ## How to add in project
-...
+PackageManager > + > Add package from git URL..
+```
+https://github.com/Kitgun1/KimicuUnityAchievementSystem.git
+```
 
 ------------
 
-## How usage
-### 1. Initialize in project
+> [!NOTE]  
+> Documentation [RU](Docs%7E/Documentation-ru.md) or [EN](Docs%7E/Documentation-en.md)
+
+## Example
+### 1. Инициализация в проекте
+> [!NOTE]  
+> [#Инициализация](Docs%7E/Documentation-en.md#Инициализация)
 ```csharp
-AchievementRoot root = await AchievementRoot.Initialize(/* Path to your custom prefab */);
-// prefab must have "AchievementRootView" type
-// AchievementRoot is not siglton, you can create different tasks for different tasks
+AchievementRoot root = await AchievementRoot.Initialize(parent);
 ```
 
-If you want to add more of your fields to achievement item, then: <br>
-Create new class with name 'AchievementItem' or 'AchievementProgressItem<T>' or custom item in namespace 'Kimicu.Achievements' and do not forget to add 'partial'
+Если вы хотите добавить больше своих полей в элемент достижения, то: <br>
+Создать новый класс с именем 'AchievementItem' или 'AchievementProgressItem<T>' или пользовательский элемент 
+в пространстве имен 'Kimicu.Achievements' и не забудьте добавить 'partial'
 ```csharp
-// Example: add `Sprite` for item
+// Example: Добавление `Sprite` в сухие данные
 
-namespace Kimicu.Achievements; // IMPORTANT!!!
+namespace Kimicu.Achievements; // ВАЖНО!!!
 
 public partial interface IAchievementItem
 {
@@ -39,33 +46,37 @@ public partial class AchievementItem
 }
 ```
 
-### 3. Create achievement item
+### 2. Create achievement item
+> [!NOTE]  
+> [#Данные](Docs%7E/Documentation-en.md#Данные)
 There are 2 types at the moment: (`AchievementItem` and `AchievementProgressItem<T>`)
 ```csharp
 var achievementItem = new AchievementItem("id_1");
 
 // or
 
-var target = 100; // must have 'string', 'list', 'class', etc.
-//If you finalized the 'AchievementProgressitem' as in 2 points, then your constructor may have another
-var achievementItem = new AchievementProgressItem<int>("id_1", "name", "description", target);
+var target = 100; // может быть 'string', 'list', 'class', etc.
+var achievementItem = new ProgressAchievementItem<int>("id_1", "name", "description", target);
 ```
 
-### 4. Create achievement
-There are also 2 options for creating: (`Achievement<T>` and `ProgressAchievement<T>`)
+
+### 3. Создать достижение
+> [!NOTE]  
+> [#Данные](Docs%7E/Documentation-en.md#Данные)
+Есть также 2 варианта создания: (`Achievement<T>` and `ProgressAchievement<T>`)
 ```csharp
 var achievement = new Achievement<Unit>(achievementItem);
 
 // or
 
-int startProgress = 0; // Type 'StartProgress' should match the type 'Achievementitem'
+int startProgress = 0; // Тип 'StartProgress' должен соответствовать типу 'Achievementitem<T>'
 var achievement = new ProgressAchievement<int>(achievementItem, startProgress, isComplete);
-// If we create with progress, then we need to specify the output spree for our type
-// Example for 'int' type:
+// Если мы создаем с прогрессом, то нам нужно указать функцию вывода прогресса в string тип
+// Пример для типа 'int':
 achievement.ProgressToString = () => $"{achievement.Progress} / {achievement.ProgressItem.TargetProgress}";
 ```
 
-### 5. To display a lot of ecups of achievement required:
+### 4. To display a lot of ecups of achievement required:
 ```csharp
 var prefab = Resources.Load<AchievementView>("Achievement View");
 var achievements = new Dictionary<AchievementView, Achievement<Unit>[]> {
