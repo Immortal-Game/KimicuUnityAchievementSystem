@@ -1,5 +1,5 @@
 # Инициализация
-> > [!NOTE]  
+> [!NOTE]  
 > Инициализация главного объекта для ачивок (можно создавать несколько под разные задачи)
 ```csharp
 AchievementRoot root = await AchievementRoot.Initialize(parent, prefabView);
