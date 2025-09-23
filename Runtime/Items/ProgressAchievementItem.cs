@@ -3,7 +3,7 @@ using System;
 namespace Kimicu.Achievements
 {
 	[Serializable]
-	public readonly partial struct AchievementProgressItem<T> : IAchievementProgress<T>
+	public readonly partial struct ProgressAchievementItem<T> : IAchievementProgress<T>
 	{
 		public string Id { get; }
 		public string Title { get; }
@@ -11,7 +11,7 @@ namespace Kimicu.Achievements
 
 		public T TargetProgress { get; }
 
-		public AchievementProgressItem(string id, string title, string description, T targetProgress)
+		public ProgressAchievementItem(string id, string title, string description, T targetProgress)
 		{
 			Id = id;
 			Title = title;

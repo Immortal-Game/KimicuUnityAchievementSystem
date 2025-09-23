@@ -12,9 +12,7 @@ namespace Kimicu.Achievements.View
 			base.Setup<T>(achievement);
 			var progressAchievement = (ProgressAchievement<T>)achievement;
 
-			progressAchievement.OnStep += OnStep;
-
-			Dispose.AddListener(() => progressAchievement.OnStep -= OnStep);
+			progressAchievement.OnStep.AddListener(OnStep);
 		}
 
 		protected virtual void OnStep<T>(ProgressAchievement<T> achievement, T oldProgress, T newProgress)

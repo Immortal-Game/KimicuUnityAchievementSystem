@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.Events;
 
 namespace Kimicu.Achievements
 {
@@ -9,7 +10,7 @@ namespace Kimicu.Achievements
 		private T _progress;
 
 		/// <summary> 1 - achievement instance, 2 - old value, 3 - new value </summary>
-		public event Action<ProgressAchievement<T>, T, T> OnStep;
+		public UnityEvent<ProgressAchievement<T>, T, T> OnStep = new();
 
 		public Func<string> ProgressToString;
 
@@ -23,7 +24,7 @@ namespace Kimicu.Achievements
 				_progress = value;
 				if (_progress.Equals(ProgressItem.TargetProgress))
 				{
-					CompleteAction?.Invoke(ProgressItem);
+					OnComplete?.Invoke(ProgressItem);
 				}
 			}
 		}
@@ -38,8 +39,8 @@ namespace Kimicu.Achievements
 
 		public override void Complete()
 		{
-			Progress = ProgressItem.TargetProgress;
 			base.Complete();
+			Progress = ProgressItem.TargetProgress;
 		}
 	}
 }

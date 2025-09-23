@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,15 +14,16 @@ namespace Kimicu.Achievements.View
 		private readonly Dictionary<string, AchievementView> _achievementViews = new();
 		private readonly UnityEvent _achievementsUpdate = new();
 
-		public void Setup<T>(Dictionary<AchievementView, Achievement<T>[]> achievements)
+		public void SetupGroup<T>(Action<IAchievementItem> onComplete, Dictionary<AchievementView, Achievement<T>[]> achievementsGroup)
 		{
-			foreach (var achievementPair in achievements)
+			foreach (var achievementPair in achievementsGroup)
 			{
 				foreach (var achievement in achievementPair.Value)
 				{
 					var view = Instantiate(achievementPair.Key, _container);
 					view.Setup(achievement);
 					_achievementViews.Add(achievement.Item.Id, view);
+					achievement.OnComplete.AddListener(item => onComplete?.Invoke(item));
 					_achievementsUpdate.AddListener(() => view.UpdateView(achievement));
 				}
 			}

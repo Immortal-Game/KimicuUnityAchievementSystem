@@ -1,13 +1,12 @@
-using System;
+using UnityEngine.Events;
 
 namespace Kimicu.Achievements
 {
-	public class Achievement<T> : IDisposable
+	public class Achievement<T>
 	{
 		public readonly IAchievementItem Item;
 
-		protected Action<IAchievementItem> CompleteAction;
-		public event Action<IAchievementItem> OnCompleteEvent;
+		public readonly UnityEvent<IAchievementItem> OnComplete = new();
 
 		public bool IsComplete { get; protected set; }
 
@@ -15,23 +14,12 @@ namespace Kimicu.Achievements
 		{
 			Item = item;
 			IsComplete = isComplete;
-			CompleteAction += OnCompleteCallback;
-		}
-
-		public void Dispose()
-		{
-			CompleteAction -= OnCompleteCallback;
 		}
 
 		public virtual void Complete()
 		{
 			IsComplete = true;
-			CompleteAction.Invoke(Item);
-		}
-
-		private void OnCompleteCallback(IAchievementItem item)
-		{
-			OnCompleteEvent?.Invoke(Item);
+			OnComplete.Invoke(Item);
 		}
 	}
 }

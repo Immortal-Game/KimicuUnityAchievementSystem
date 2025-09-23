@@ -10,23 +10,13 @@ namespace Kimicu.Achievements.View
 		[SerializeField] protected TMP_Text Title;
 		[SerializeField] protected TMP_Text Description;
 		[SerializeField] protected Button CollectButton;
-
-		protected readonly UnityEvent Dispose = new();
 		
 		public virtual void Setup<T>(Achievement<T> achievement)
 		{
 			UpdateView(achievement);
 
-			achievement.OnCompleteEvent += OnComplete;
+			achievement.OnComplete.AddListener(OnComplete);
 			CollectButton.onClick.AddListener(Collected);
-			
-			Dispose.AddListener(() => achievement.OnCompleteEvent -= OnComplete);
-		}
-
-		protected virtual void OnDestroy()
-		{
-			Dispose.Invoke();
-			Dispose.RemoveAllListeners();
 		}
 
 		protected virtual void Collected()
