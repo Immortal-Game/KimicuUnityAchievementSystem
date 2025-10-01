@@ -9,7 +9,7 @@ https://github.com/Kitgun1/KimicuUnityAchievementSystem.git
 ------------
 
 > [!NOTE]  
-> Documentation [RU](Docs%7E/Documentation-ru.md)
+> Documentation [RU](Docs%7E/Documentation-ru.md) or [EN](Docs%7E/Documentation-en.md)
 
 ## Example
 ### 1. Инициализация в проекте
